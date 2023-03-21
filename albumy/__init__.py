@@ -17,8 +17,10 @@ from albumy.blueprints.ajax import ajax_bp
 from albumy.blueprints.auth import auth_bp
 from albumy.blueprints.main import main_bp
 from albumy.blueprints.user import user_bp
-from albumy.extensions import bootstrap, db, login_manager, mail, dropzone, moment, whooshee, avatars, csrf
-from albumy.models import Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission
+from albumy.extensions import (
+    db, login_manager, mail, moment, avatars, csrf)
+from albumy.models import (
+    Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission)
 from albumy.settings import config
 
 
@@ -26,7 +28,7 @@ def create_app(config_name=None):
     if config_name is None:
         config_name = os.getenv('FLASK_CONFIG', 'development')
 
-    app = Flask('albumy')
+    app = Flask(__name__)
     
     app.config.from_object(config[config_name])
 
@@ -41,13 +43,10 @@ def create_app(config_name=None):
 
 
 def register_extensions(app):
-    bootstrap.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
     mail.init_app(app)
-    dropzone.init_app(app)
     moment.init_app(app)
-    whooshee.init_app(app)
     avatars.init_app(app)
     csrf.init_app(app)
 

@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-    :author: Grey Li (李辉)
-    :url: http://greyli.com
-    :copyright: © 2018 Grey Li <withlihui@gmail.com>
-    :license: MIT, see LICENSE for more details.
-"""
 import os
 import uuid
+import pickle
 
 try:
     from urlparse import urlparse, urljoin
@@ -16,8 +11,6 @@ except ImportError:
 import PIL
 from PIL import Image
 from flask import current_app, request, url_for, redirect, flash
-from itsdangerous import BadSignature, SignatureExpired
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 from albumy.extensions import db
 from albumy.models import User
@@ -25,20 +18,21 @@ from albumy.settings import Operations
 
 
 def generate_token(user, operation, expire_in=None, **kwargs):
-    s = Serializer(current_app.config['SECRET_KEY'], expire_in)
+    # s = Serializer(current_app.config['SECRET_KEY'], expire_in)
 
     data = {'id': user.id, 'operation': operation}
     data.update(**kwargs)
-    return s.dumps(data)
+    return pickle.dumps(data)
 
 
 def validate_token(user, token, operation, new_password=None):
-    s = Serializer(current_app.config['SECRET_KEY'])
+    # s = Serializer(current_app.config['SECRET_KEY'])
 
-    try:
+    """try:
         data = s.loads(token)
     except (SignatureExpired, BadSignature):
-        return False
+        return False"""
+    data = pickle.load(token)
 
     if operation != data.get('operation') or user.id != data.get('id'):
         return False

@@ -5,6 +5,7 @@ from flask import render_template, flash, redirect, url_for, current_app, \
     send_from_directory, request, abort, Blueprint
 from flask_login import login_required, current_user
 from sqlalchemy.sql.expression import func
+from flask_bootstrap import Bootstrap4
 
 from albumy.decorators import confirm_required, permission_required
 from albumy.extensions import db

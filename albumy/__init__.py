@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-    :author: Grey Li (李辉)
-    :url: http://greyli.com
-    :copyright: © 2018 Grey Li <withlihui@gmail.com>
-    :license: MIT, see LICENSE for more details.
-"""
 import os
 
 import click
@@ -18,7 +12,7 @@ from albumy.blueprints.auth import auth_bp
 from albumy.blueprints.main import main_bp
 from albumy.blueprints.user import user_bp
 from albumy.extensions import (
-    db, login_manager, mail, moment, avatars, csrf)
+    db, login_manager, mail, moment, avatars, csrf, bootstrap)
 from albumy.models import (
     Role, User, Photo, Tag, Follow, Notification, Comment, Collect, Permission)
 from albumy.settings import config
@@ -49,6 +43,7 @@ def register_extensions(app):
     moment.init_app(app)
     avatars.init_app(app)
     csrf.init_app(app)
+    bootstrap.init_app(app)
 
 
 def register_blueprints(app):

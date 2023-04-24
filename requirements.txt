@@ -1,5 +1,5 @@
 blinker
-# bootstrap-flask
+bootstrap-flask
 click
 flask-avatars
 email_validator
